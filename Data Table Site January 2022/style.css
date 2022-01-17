@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&display=swap");
+
+body {
+    align-items: center;
+    background-color: rgb(38, 255, 226);    
+    display: flex;
+    flex-direction: column;
+    font-family: "Be Vietnam Pro", sans-serif;
+    height: 100vh;
+}
+
+.bannerSection {
+    background: rgb(61, 124, 196);
+    border: 1px solid rgb(42, 84, 133);
+    border-radius: 8px;
+    box-shadow: 0px 0px 3px rgb(5, 5, 5);
+    color: white;
+    font-size: 1.5em;
+    margin: 0.5em auto;
+    text-align: center;
+    text-shadow: 2px 2px 3px rgb(42, 84, 133);
+    width: 70%;
+}
+
+.container {
+    background: linear-gradient(rgb(140, 232, 255), rgb(162, 236, 255));
+    border: 1px solid black;
+    height: 80%;
+    width: 80%;
+}
+
+.controls {
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(250, 250, 250, 0.699));
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 7px;
+    box-shadow: 0px 0px 4px rgb(42, 84, 133);
+    margin: 0em auto;
+    padding-bottom: 1em;
+    text-align: center;
+    width: 60%;
+}
+
+.controlsTitle {
+    margin: none;
+    padding: none;
+}
+
+.oddRow {
+    background: white;
+  }
+  
+  .evenRow {
+    background: rgb(210, 245, 253);
+  }
+
+.table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    box-shadow: 0px 0px 4px rgb(42, 84, 133);
+    margin: 1em auto;
+}
+  
+.table * {
+    border: 1px solid black;
+    padding: 0.5em;
+    text-align: center;
+    width: 8em;
+}
+  
+.table tr {
+    transition-duration: 0.2s;
+}
+
+  
+.table tr:first-of-type {
+    background: rgb(61, 124, 196);
+    color: white;
+    text-shadow: 2px 2px 2px rgb(42, 84, 133);
+}

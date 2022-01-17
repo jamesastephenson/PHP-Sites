@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Table Site January 2022</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<!-- MAY NEED TO MAKE A SEPARATE PHP FILE FOR WHEN FORM IS SUBMITTED, JUST COPY OVER BASE HTML LAYOUT-->
+<body>
+    <div class="container">
+        <div class="bannerSection">
+            <h1>Data Table Site January 2022</h1>
+        </div>
+
+        <!-- note: blank action attribute is essential for having this work on same page-->
+        <form name="form" method="post" action="submit.php" class="controls">
+            <h3 class="controlsTitle">Controls</h3>
+
+            <label>Cool! A Dropdown!</label>
+            <select name="option" method="post">
+                <option value="-" selected="selected">-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <input type="submit" name="submit" onsubmit="this.form.submit()">
+        </form>
+    </div>
+    <footer>This is a footer</footer>
+</body>
+</html>
