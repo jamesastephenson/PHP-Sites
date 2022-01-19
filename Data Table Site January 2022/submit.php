@@ -27,6 +27,10 @@
             </select>
             <br><br>
 
+            <label for="minTransaction">Min transaction value (0-10000):</label>
+            <input type="number" name="minTransaction" min="0" max="10000" value="0">
+            <br><br>
+
             <input type="radio" name="order" value="ascending" checked="checked">
             <label for="order">Ascending</label>
             <input type="radio" name="order" value="descending">
@@ -60,9 +64,10 @@
                 } else {
                     $option = $_POST["option"];
                     $order = $_POST["order"];
+                    $minTransaction = $_POST["minTransaction"];
                 }
 
-                function sortData($selection, $ordering) {
+                function sortData($selection, $ordering, $minSpent) {
                     // reiterating vars for allowing additional selection
                     $serverName = "localhost";  $dbUsername = "root";
                     $dbPassword = "";  $dbName = "january_2022";
@@ -74,17 +79,20 @@
                     else if ($selection == "Email") {$sortVar = "email";}
                     else if ($selection == "Zip Code") {$sortVar = "postalZip";}
                     else if ($selection == "Customer Code") {$sortVar = "alphanumeric";}
-                    else if ($selection == "Transaction Total") {$sortVar = "currency";}
+                    else if ($selection == "Transaction Total") {$sortVar = "transaction";}
                     else {echo '<h2 class="tableTitle red">What did you do?</h2>';}
 
                     // define ASC / DESC for ORDER BY section of SQL req
                     if ($ordering == "descending") {$orderVar = "DESC";}
                     else {$orderVar = "ASC";}
 
+                    // CURRENT ISSUE IS WHERE CLAUSE
+                    // -The Plan: replace the column in phpmyadmin, just use a number value and append dollar sign w/ php
                     $sqlRequest = "
                     SELECT * 
                     FROM users 
-                    ORDER BY ".$sortVar." ".$orderVar;
+                    WHERE transaction >= ".$minSpent." 
+                    ORDER BY ".$sortVar." ".$orderVar.";";
 
                     // -> is used to call a method or access a property on the object of a class
                     // => is used to assign values to keys of an array
@@ -100,7 +108,7 @@
                                     <td>'.$row["email"].'</td>
                                     <td>'.$row["postalZip"].'</td>
                                     <td>'.$row["alphanumeric"].'</td>
-                                    <td>'.$row["currency"].'</td>
+                                    <td>$'.$row["transaction"].'</td>
                                 </tr>';
                             }
                             else if ($rowCount % 2 != 0 ) {
@@ -109,7 +117,7 @@
                                     <td>'.$row["email"].'</td>
                                     <td>'.$row["postalZip"].'</td>
                                     <td>'.$row["alphanumeric"].'</td>
-                                    <td>'.$row["currency"].'</td>
+                                    <td>$'.$row["transaction"].'</td>
                                 </tr>';
                             }
                             $rowCount += 1;
@@ -120,7 +128,7 @@
                     $connect->close();
                 }
                 
-                sortData($option, $order);
+                sortData($option, $order, $minTransaction);
             ?>
             </table>
         </div>
