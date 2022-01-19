@@ -25,8 +25,18 @@
                 <option value="Customer Code">Customer Code</option>
                 <option value="Transaction Total">Transaction Total</option>
             </select>
+            <br><br>
+
+            <input type="radio" name="order" value="ascending" checked="checked">
+            <label for="order">Ascending</label>
+            <input type="radio" name="order" value="descending">
+            <label for="order">Descending</label>
+            <br>
+
             <input type="submit" name="submit" onsubmit="this.form.submit()">
         </form>
+
+        
 
         <div class="tableSection">
             
@@ -49,15 +59,16 @@
                     die("Connection failed: ".mysqli_connect_error());
                 } else {
                     $option = $_POST["option"];
+                    $order = $_POST["order"];
                 }
 
-                function sortData($selection) {
+                function sortData($selection, $ordering) {
                     // reiterating vars for allowing additional selection
                     $serverName = "localhost";  $dbUsername = "root";
                     $dbPassword = "";  $dbName = "january_2022";
                     $connect = mysqli_connect($serverName, $dbUsername, $dbPassword, $dbName);
 
-                    //lmao
+                    // define var for ORDER BY section of SQL req
                     if ($selection == "-") {echo '<h2 class="tableTitle red">Please select an option.</h2>';}
                     else if ($selection == "Name") {$sortVar = "name";}
                     else if ($selection == "Email") {$sortVar = "email";}
@@ -66,15 +77,19 @@
                     else if ($selection == "Transaction Total") {$sortVar = "currency";}
                     else {echo '<h2 class="tableTitle red">What did you do?</h2>';}
 
+                    // define ASC / DESC for ORDER BY section of SQL req
+                    if ($ordering == "descending") {$orderVar = "DESC";}
+                    else {$orderVar = "ASC";}
+
                     $sqlRequest = "
                     SELECT * 
                     FROM users 
-                    ORDER BY ".$sortVar;  // add DESC to descend order
+                    ORDER BY ".$sortVar." ".$orderVar;
 
                     // -> is used to call a method or access a property on the object of a class
                     // => is used to assign values to keys of an array
                     $result = $connect->query($sqlRequest);
-                    print '<h2 class="tableTitle">Sorting by '.$selection.'</h2>';
+                    print '<h2 class="tableTitle">Sorting by '.$selection.' ('.strtolower($orderVar).'ending)</h2>';
 
                     if ($result->num_rows > 0) {
                         $rowCount = 1;
@@ -88,7 +103,7 @@
                                     <td>'.$row["currency"].'</td>
                                 </tr>';
                             }
-                            if ($rowCount % 2 != 0 ) {
+                            else if ($rowCount % 2 != 0 ) {
                                 echo '<tr class="oddRow">
                                     <td>'.$row["name"].'</td>
                                     <td>'.$row["email"].'</td>
@@ -105,7 +120,7 @@
                     $connect->close();
                 }
                 
-                sortData($option);
+                sortData($option, $order);
             ?>
             </table>
         </div>
