@@ -24,6 +24,7 @@ body {
 .container {
     background: linear-gradient(rgb(140, 232, 255), rgb(162, 236, 255));
     border: 1px solid black;
+    width: 80%;
 }
 
 .controls {
@@ -46,15 +47,54 @@ body {
     background: white;
   }
   
-  .evenRow {
+.evenRow {
     background: rgb(210, 245, 253);
-  }
+}
+
+.footer {
+    background: rgb(61, 124, 196);
+    border: 1px solid rgb(42, 84, 133);
+    box-shadow: 0px 0px 4px rgb(42, 84, 133);
+    color: white;
+    font-size: 1.25em;
+    padding: .5em 0;
+    text-align: center;
+    text-shadow: 1px 1px 2px black;
+}
+
+.red {
+    background: red;
+}
+
+.submit {
+    background: rgb(47, 151, 87);
+    border: 1px solid rgb(47, 151, 87);
+    border-radius: 8px;
+    color: white;
+    font-size: 1.25em;
+    margin-top: 1em;
+    padding: 0.25em 1em;
+    text-shadow: 1px 1px 2px rgb(24, 80, 46);
+    transition-duration: 0.2s;
+}
+
+.submit:hover {
+    cursor: pointer;
+    padding: 0.25em 7em;
+    text-shadow: 1px 1px 2px black;
+}
+
+.submit:active {
+    background: rgb(24, 80, 46);
+    transform: scale(90%);
+}
 
 .table {
     border: 1px solid black;
     border-collapse: collapse;
     box-shadow: 0px 0px 4px rgb(42, 84, 133);
     margin: 1em auto;
+    width: 85%;
 }
   
 .table * {
@@ -87,8 +127,4 @@ body {
     text-align: center;
     text-shadow: 2px 2px 3px rgb(42, 84, 133);
     width: 70%;
-}
-
-.red {
-    background: red;
 }

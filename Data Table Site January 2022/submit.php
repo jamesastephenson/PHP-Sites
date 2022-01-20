@@ -10,10 +10,12 @@
 
 <body>
     <div class="container">
+        <!-- Title Banner -->
         <div class="bannerSection">
             <h1>Data Table Site January 2022</h1>
         </div>
 
+        <!-- Reiterate form so page can be re-used / called -->
         <form name="form" method="post" action="" class="controls">
             <h3 class="controlsTitle">Controls</h3>
 
@@ -37,28 +39,18 @@
             <label for="order">Descending</label>
             <br>
 
-            <input type="submit" name="submit" onsubmit="this.form.submit()">
-        </form>
+            <button type="submit" name="submit" onsubmit="this.form.submit()" class="submit">Submit</button>
+        </form> 
 
-        
-
+        <!-- Table -->
         <div class="tableSection">
-            
-            <table class="table">
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Zip Code</th>
-                    <th>Customer Code</th>
-                    <th>Total</th>
-                </tr>
             <?php
                 // assign vars for server connection
                 $serverName = "localhost";  $dbUsername = "root";
                 $dbPassword = "";  $dbName = "january_2022";
                 $connect = mysqli_connect($serverName, $dbUsername, $dbPassword, $dbName);
 
-                // connection is working
+                // check connection is working
                 if (!$connect) {
                     die("Connection failed: ".mysqli_connect_error());
                 } else {
@@ -67,12 +59,11 @@
                     $minTransaction = $_POST["minTransaction"];
                 }
 
-                function sortData($selection, $ordering, $minSpent) {
-                    // reiterating vars for allowing additional selection
-                    $serverName = "localhost";  $dbUsername = "root";
-                    $dbPassword = "";  $dbName = "january_2022";
-                    $connect = mysqli_connect($serverName, $dbUsername, $dbPassword, $dbName);
+                // Call main function, pass in order / filter options and SQL connection var
+                sortData($option, $order, $minTransaction, $connect);
 
+                // Sort based on user controls, connect to SQL server (localhost in this case), generate table
+                function sortData($selection, $ordering, $minSpent, $connection) {
                     // define var for ORDER BY section of SQL req
                     if ($selection == "-") {echo '<h2 class="tableTitle red">Please select an option.</h2>';}
                     else if ($selection == "Name") {$sortVar = "name";}
@@ -86,8 +77,7 @@
                     if ($ordering == "descending") {$orderVar = "DESC";}
                     else {$orderVar = "ASC";}
 
-                    // CURRENT ISSUE IS WHERE CLAUSE
-                    // -The Plan: replace the column in phpmyadmin, just use a number value and append dollar sign w/ php
+                    // generate SQL Request
                     $sqlRequest = "
                     SELECT * 
                     FROM users 
@@ -96,10 +86,22 @@
 
                     // -> is used to call a method or access a property on the object of a class
                     // => is used to assign values to keys of an array
-                    $result = $connect->query($sqlRequest);
-                    print '<h2 class="tableTitle">Sorting by '.$selection.' ('.strtolower($orderVar).'ending)</h2>';
+                    $result = $connection->query($sqlRequest);
+                    echo '<h2 class="tableTitle">Sorting by '.$selection.' ('.strtolower($orderVar).'ending)</h2>';
 
+                    // loop through SQL database
                     if ($result->num_rows > 0) {
+                        // initialize table
+                        echo '<table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Zip Code</th>
+                            <th>Customer Code</th>
+                            <th>Total</th>
+                        </tr>';
+
+                        // generate table rows, style zebra stripe effect
                         $rowCount = 1;
                         while ($row = $result->fetch_assoc()) {
                             if ($rowCount % 2 == 0 ) {
@@ -123,16 +125,15 @@
                             $rowCount += 1;
                         }
                     } else {
-                        echo "no results";
+                        echo '<h2 class="tableTitle red">no results</h2>';
                     }
-                    $connect->close();
+                    $connection->close();  // end connection
                 }
-                
-                sortData($option, $order, $minTransaction);
             ?>
-            </table>
+            </table> <!-- complete table -->
         </div>
-        <footer>This is a footer</footer>
+        <!-- Footer -->
+        <footer class="footer">James Stephenson 2022</footer>
     </div>
 </body>
 </html>

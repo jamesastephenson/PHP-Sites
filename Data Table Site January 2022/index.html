@@ -8,14 +8,14 @@
     <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
-<!-- MAY NEED TO MAKE A SEPARATE PHP FILE FOR WHEN FORM IS SUBMITTED, JUST COPY OVER BASE HTML LAYOUT-->
 <body>
     <div class="container">
+        <!-- Title Banner -->
         <div class="bannerSection">
             <h1>Data Table Site January 2022</h1>
         </div>
 
-        <!-- note: blank action attribute is essential for having this work on same page-->
+        <!-- Form Control -->
         <form name="form" method="post" action="submit.php" class="controls">
             <h3 class="controlsTitle">Controls</h3>
 
@@ -39,10 +39,11 @@
             <label for="order">Descending</label>
             <br>
 
-
-            <input type="submit" name="submit" onsubmit="this.form.submit()">
+            <button type="submit" name="submit" onsubmit="this.form.submit()" class="submit">Submit</button>
         </form>
-        <footer>This is a footer</footer>
+
+        <!-- Footer -->
+        <footer class="footer">James Stephenson 2022</footer>
     </div>
     
 </body>
